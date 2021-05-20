@@ -46,8 +46,8 @@ PHANTOM_PACKAGE("phantom.serialization")
             .typedef_<SerializerStatus>("SerializerStatus")
             .typedef_<SerializerError>("SerializerError")
             .typedef_<SerializerVisitor>("SerializerVisitor")
-            .staticMethod<bool(StringView, const Value&)>("SaveToFile", &_::SaveToFile)
-            .staticMethod<bool(StringView, Value&)>("LoadFromFile", &_::LoadFromFile)
+            .staticMethod<bool(StringView, const Value&)>("SaveToFile", &_::SaveToFile)({"a_FilePath","a_Val"})
+            .staticMethod<bool(StringView, Value&)>("LoadFromFile", &_::LoadFromFile)({"a_FilePath","a_Out"})
             ;
         }
         #endif // PHANTOM_NOT_TEMPLATE

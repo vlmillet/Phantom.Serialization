@@ -32,8 +32,8 @@ PHANTOM_PACKAGE("phantom.serialization")
             this_()
         .public_()
             /// missing symbol(s) reflection (std::ostream) -> use the 'haunt.bind' to bind symbols with your custom haunt files
-            // .constructor<void(::std::ostream &, int)>()["4"]
-            .method<OValueStream&(const Value&)>("operator<<", &_::operator<<)
+            // .constructor<void(::std::ostream &, int)>()({"a_OutStream","tabSize"})["4"]
+            .method<OValueStream&(const Value&)>("operator<<", &_::operator<<)({"val"})
             ;
         }
         #endif // PHANTOM_NOT_TEMPLATE
