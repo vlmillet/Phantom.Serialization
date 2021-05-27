@@ -43,7 +43,7 @@ template<class Derived, class SerializerT>
 class SerializerVisitorT : public _SerializerVisitorT::DerivedSelector<Derived>::type
 {
 #if PHANTOM_COMPILER == PHANTOM_COMPILER_VISUAL_STUDIO &&                                                              \
-PHANTOM_COMPILER_VERSION >= PHANTOM_COMPILER_VISUAL_STUDIO_MAJOR_VERSION_2017
+PHANTOM_COMPILER_VERSION >= PHANTOM_COMPILER_VISUAL_STUDIO_VERSION_2017
     friend class _SerializerVisitorT::DerivedSelector<Derived>::type;
 #else
     friend _SerializerVisitorT::DerivedSelector<Derived>::type;
