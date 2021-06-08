@@ -349,7 +349,7 @@ protected:
                 {
                     EntryPoint entryPoint;
                     pVM->getValue(a_Input.getAddress(), &entryPoint);
-                    if (!entryPoint.isEmpty())
+                    if (entryPoint)
                         entryPoint(getSerializer(), m_MemberFilterMask);
                 }
                 else if (pVM->isWrittable() && pVM->isReadable())

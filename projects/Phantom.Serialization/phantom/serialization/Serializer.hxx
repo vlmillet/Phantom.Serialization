@@ -144,10 +144,8 @@ PHANTOM_PACKAGE("phantom.serialization")
             .method<::phantom::serialization::SerializerStatus(uint8 const*, size_t), pure_virtual>("write", &_::write)({"a_pBytes","a_FixedSize"})
             /// missing symbol(s) reflection (phantom::hex64) -> use the 'haunt.bind' to bind symbols with your custom haunt files
             // .method<::phantom::serialization::SerializerStatus(hex64 const&), pure_virtual>("write", &_::write)({"v"})
-            /// missing symbol(s) reflection (std::nullptr_t) -> use the 'haunt.bind' to bind symbols with your custom haunt files
-            // .method<SerializerStatus(const std::nullptr_t &)>("write", &_::write)({"a_nullptr"})
-            /// missing symbol(s) reflection (std::nullptr_t) -> use the 'haunt.bind' to bind symbols with your custom haunt files
-            // .method<SerializerStatus(std::nullptr_t &)>("read", &_::read)({"a_nullptr"})
+            .method<SerializerStatus(const std::nullptr_t &)>("write", &_::write)({"a_nullptr"})
+            .method<SerializerStatus(std::nullptr_t &)>("read", &_::read)({"a_nullptr"})
             .method<::phantom::serialization::SerializerStatus(const wchar_t&), pure_virtual>("write", &_::write)({"a_wchar_t"})
             .method<::phantom::serialization::SerializerStatus(const char16_t&), pure_virtual>("write", &_::write)({"a_char16_t"})
             .method<::phantom::serialization::SerializerStatus(const char32_t&), pure_virtual>("write", &_::write)({"a_char32_t"})
