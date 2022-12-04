@@ -61,6 +61,7 @@ PHANTOM_PACKAGE("phantom.serialization")
         PHANTOM_CLASS_T((class, class), (Derived, SerializerT), SerializerVisitorT)
         {
             using Array = typedef_<PHANTOM_TYPENAME _::Array>;
+            using ArrayClass = typedef_<PHANTOM_TYPENAME _::ArrayClass>;
             using BaseClass = typedef_<PHANTOM_TYPENAME _::BaseClass>;
             using Class = typedef_<PHANTOM_TYPENAME _::Class>;
             using ClassType = typedef_<PHANTOM_TYPENAME _::ClassType>;
@@ -91,6 +92,7 @@ PHANTOM_PACKAGE("phantom.serialization")
             .PHANTOM_T typedef_<ContainerClass>("ContainerClass")
             // InstanceT : nested alias templates not suppported
             // MemberAccessT : nested alias templates not suppported
+            .PHANTOM_T typedef_<ArrayClass>("ArrayClass")
             .PHANTOM_T typedef_<Type>("Type")
             .PHANTOM_T typedef_<Class>("Class")
             .PHANTOM_T typedef_<ClassType>("ClassType")
@@ -119,6 +121,7 @@ PHANTOM_PACKAGE("phantom.serialization")
             .PHANTOM_T method<bool(InstanceT<Type>, size_t)>("traverseContainerElement", &_::traverseContainerElement)({"a_Input","a_uiIndex"})
             .PHANTOM_T method<void(InstanceT<ContainerClass>)>("clear", &_::clear)({"a_Input"})
             .PHANTOM_T method<bool(InstanceT<VectorClass>)>("traverseVectorClass", &_::traverseVectorClass)({"a_Input"})
+            .PHANTOM_T method<bool(InstanceT<ArrayClass>)>("traverseArrayClass", &_::traverseArrayClass)({"a_Input"})
             .PHANTOM_T method<bool(InstanceT<SetClass>)>("readSetContainer", &_::readSetContainer)({"a_Input"})
             .PHANTOM_T method<bool(InstanceT<MapClass>)>("readMapContainer", &_::readMapContainer)({"a_Input"})
             .PHANTOM_T method<bool(InstanceT<MapClass>)>("traverseMapClass", &_::traverseMapClass)({"a_Input"})
@@ -146,6 +149,8 @@ PHANTOM_PACKAGE("phantom.serialization")
             .PHANTOM_T method<bool(InstanceT<SetClass>)>("walkUpEndFromSetClass", &_::walkUpEndFromSetClass)({"a_Input"})
             .PHANTOM_T method<bool(InstanceT<StringClass>)>("walkUpVisitFromStringClass", &_::walkUpVisitFromStringClass)({"a_Input"})
             .PHANTOM_T method<bool(InstanceT<StringClass>)>("walkUpEndFromStringClass", &_::walkUpEndFromStringClass)({"a_Input"})
+            .PHANTOM_T method<bool(InstanceT<ArrayClass>)>("walkUpVisitFromArrayClass", &_::walkUpVisitFromArrayClass)({"a_Input"})
+            .PHANTOM_T method<bool(InstanceT<ArrayClass>)>("walkUpEndFromArrayClass", &_::walkUpEndFromArrayClass)({"a_Input"})
             /// invalid declaration, some symbols have not been parsed correctly probably due to missing include path or missing #include in the .h
             // .PHANTOM_T field("m_MemberFilterMask", &_::m_MemberFilterMask)
             ;

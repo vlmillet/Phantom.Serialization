@@ -62,6 +62,7 @@ public:
     using InstanceT = phantom::lang::InstanceT<T>;
     template<class T>
     using MemberAccessT = phantom::lang::MemberAccessT<T>;
+    using ArrayClass = lang::ArrayClass;
     using Type = lang::Type;
     using Class = lang::Class;
     using ClassType = lang::ClassType;
@@ -176,6 +177,36 @@ protected:
                     if (!this->traverse(newElement))
                         return false;
                     pMeta->push_back(pAddress, pVal);
+                }
+            }
+        }
+        return false;
+    }
+
+    bool traverseArrayClass(InstanceT<ArrayClass> a_Input)
+    {
+        if (m_Serializer.isWriting())
+            return Default::traverseArrayClass(a_Input);
+
+        if (auto arr = m_Serializer.scopedArray())
+        {
+            auto   pMeta = a_Input.getMeta();
+            auto   pAddress = a_Input.getAddress();
+            Type*  pValueType = pMeta->getItemType();
+            void*  pVal = PHANTOM_ALLOCA(pValueType->getSize());
+            size_t i = 0;
+            while (true)
+            {
+                if (auto elem = m_Serializer.scopedArrayElement())
+                {
+                    if (elem.getStatus() == SerializerStatus::OptionalEntryNotFound)
+                        return true;
+                    auto guard = pValueType->scopedConstruct(pVal);
+                    auto newElement = InstanceT<Type>(pValueType, pVal);
+                    if (!this->traverse(newElement))
+                        return false;
+                    pMeta->setItemValue(pAddress, i, pVal);
+                    ++i;
                 }
             }
         }
@@ -470,6 +501,8 @@ protected:
     bool walkUpEndFromSetClass(InstanceT<SetClass> a_Input) { return this->this_()->endSetClass(a_Input); }
     bool walkUpVisitFromStringClass(InstanceT<StringClass> a_Input) { return this->this_()->visitStringClass(a_Input); }
     bool walkUpEndFromStringClass(InstanceT<StringClass> a_Input) { return this->this_()->endStringClass(a_Input); }
+    bool walkUpVisitFromArrayClass(InstanceT<ArrayClass> a_Input) { return this->this_()->visitArrayClass(a_Input); }
+    bool walkUpEndFromArrayClass(InstanceT<ArrayClass> a_Input) { return this->this_()->endArrayClass(a_Input); }
 
 private:
     Serializer&      m_Serializer;
